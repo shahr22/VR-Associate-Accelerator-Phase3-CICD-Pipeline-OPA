@@ -30,5 +30,5 @@ class KafkaPipelineStack(Stack):
             ),
         )
 
-        deploy = KafkaPipelineStage(self, "Deploy")
-        deploy_stage = pipeline.add_stage(deploy)
+        # deploy = KafkaPipelineStage(self, "Deploy")
+        # deploy_stage = pipeline.add_stage(deploy)
