@@ -16,19 +16,19 @@ class KafkaPipelineStack(Stack):
             repository_name= "KafkaRepo"
         )
 
-        # pipeline = pipelines.CodePipeline(
-        #     self,
-        #     "Pipeline",
-        #     synth=pipelines.ShellStep(
-        #         "Synth",
-        #         input=pipelines.CodePipelineSource.code_commit(repo, "master"),
-        #         commands=[
-        #             "npm install -g aws-cdk",  # Installs the cdk cli on Codebuild
-        #             "pip install -r requirements.txt",  # Instructs Codebuild to install required packages
-        #             "cdk synth",
-        #         ]
-        #     ),
-        # )
+        pipeline = pipelines.CodePipeline(
+            self,
+            "Pipeline",
+            synth=pipelines.ShellStep(
+                "Synth",
+                input=pipelines.CodePipelineSource.code_commit(repo, "master"),
+                commands=[
+                    "npm install -g aws-cdk",  # Installs the cdk cli on Codebuild
+                    "pip install -r requirements.txt",  # Instructs Codebuild to install required packages
+                    "cdk synth",
+                ]
+            ),
+        )
 
-        # deploy = KafkaPipelineStage(self, "Deploy")
-        # deploy_stage = pipeline.add_stage(deploy)
+        deploy = KafkaPipelineStage(self, "Deploy")
+        deploy_stage = pipeline.add_stage(deploy)
