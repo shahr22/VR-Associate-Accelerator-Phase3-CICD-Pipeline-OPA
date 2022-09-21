@@ -15,7 +15,9 @@ class KafkaPipelineStack(Stack):
             self, 'KafkaRepo',
             repository_name= "KafkaRepo"
         )
-
+        
+        # Uses CDK Pipelines instead of aws-codepipeline
+        
         pipeline = pipelines.CodePipeline(
             self,
             "Pipeline",
@@ -32,3 +34,4 @@ class KafkaPipelineStack(Stack):
 
         deploy = KafkaPipelineStage(self, "Deploy")
         deploy_stage = pipeline.add_stage(deploy)
+        

@@ -63,3 +63,12 @@ class CdkKafkaStack(Stack):
             security_group=kafka_sg,
             )
 
+        second_instance = ec2.Instance(self, "Test",
+            instance_type=ec2.InstanceType(instance_type),
+            machine_image=amzn_linux,
+            vpc = self.vpc,
+            vpc_subnets=ec2.SubnetSelection(subnet_type=ec2.SubnetType.PUBLIC),
+            key_name=key_pair,
+            security_group=kafka_sg,
+        )
+
