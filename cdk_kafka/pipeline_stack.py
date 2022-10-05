@@ -22,13 +22,17 @@ class KafkaPipelineStack(Stack):
             self,
             "Pipeline",
             synth=pipelines.ShellStep(
-                "Synth",
+                "Synth and Evaluate",
                 input=pipelines.CodePipelineSource.code_commit(repo, "master"),
                 commands=[
                     "npm install -g aws-cdk",  # Installs the cdk cli on Codebuild
                     "pip install -r requirements.txt",  # Instructs Codebuild to install required packages
                     "cdk synth",
-                ]
+                    "curl -L -o opa https://openpolicyagent.org/downloads/v0.44.0/opa_linux_amd64_static",
+                    "chmod 755 ./opa",
+                    './opa eval --fail-defined -i ./cdk.out/CdkKafkaStack.template.json -d ./cdk_kafka/policy.rego "data"',
+                ],
+                primary_output_directory="cdk.out",
             ),
         )
 

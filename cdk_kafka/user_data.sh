@@ -6,3 +6,5 @@ tar -xzf kafka_2.13-3.2.3.tgz
 kafka_2.13-3.2.3/bin/zookeeper-server-start.sh -daemon kafka_2.13-3.2.3/config/zookeeper.properties
 sleep 5s
 kafka_2.13-3.2.3/bin/kafka-server-start.sh -daemon kafka_2.13-3.2.3/config/server.properties
+
+# Add Userdata comments
