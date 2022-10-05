@@ -32,7 +32,7 @@ class KafkaPipelineStack(Stack):
                     "chmod 755 ./opa",
                     "mkdir opa_input",
                     "for template in $(find ./cdk.out -type f -maxdepth 2 -name '*.template.json'); do cp $template ./opa_input; done",
-                    './opa eval --fail-defined -d ./opa_input -d cdk_kafka/policy.rego "data"',
+                    './opa eval --fail-defined -d ./opa_input -d cdk_kafka/policy2.rego "data"',
                 ],
                 primary_output_directory="cdk.out",
             ),
