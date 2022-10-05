@@ -48,10 +48,10 @@ class CdkKafkaStack(Stack):
             allow_all_outbound=True
         )
         # Security group opens up Kafka's required ports
-        kafka_sg.add_ingress_rule(ec2.Peer.any_ipv4(), ec2.Port.tcp(22))
-        kafka_sg.add_ingress_rule(ec2.Peer.any_ipv4(), ec2.Port.tcp_range(2888, 3888))
-        kafka_sg.add_ingress_rule(ec2.Peer.any_ipv4(), ec2.Port.tcp(9092))
-        kafka_sg.add_ingress_rule(ec2.Peer.any_ipv4(), ec2.Port.tcp(2181))         
+        # kafka_sg.add_ingress_rule(ec2.Peer.any_ipv4(), ec2.Port.tcp(22))
+        # kafka_sg.add_ingress_rule(ec2.Peer.any_ipv4(), ec2.Port.tcp_range(2888, 3888))
+        # kafka_sg.add_ingress_rule(ec2.Peer.any_ipv4(), ec2.Port.tcp(9092))
+        # kafka_sg.add_ingress_rule(ec2.Peer.any_ipv4(), ec2.Port.tcp(2181))         
 
         kafka = ec2.Instance(self, "Kafka",
             instance_type=ec2.InstanceType(instance_type),
