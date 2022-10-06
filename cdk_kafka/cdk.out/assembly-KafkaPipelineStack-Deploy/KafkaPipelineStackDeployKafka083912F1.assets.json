@@ -1,0 +1,19 @@
+{
+  "version": "21.0.0",
+  "files": {
+    "a5bf990ea146f02356d6892801e904c9506f006c2eb7077056e2323962cd7eee": {
+      "source": {
+        "path": "KafkaPipelineStackDeployKafka083912F1.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "current_account-current_region": {
+          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
+          "objectKey": "a5bf990ea146f02356d6892801e904c9506f006c2eb7077056e2323962cd7eee.json",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}

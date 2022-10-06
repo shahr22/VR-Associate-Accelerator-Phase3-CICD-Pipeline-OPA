@@ -1,0 +1,521 @@
+{
+ "Resources": {
+  "kafkavpcF4A7E5D6": {
+   "Type": "AWS::EC2::VPC",
+   "Properties": {
+    "CidrBlock": "10.0.0.0/16",
+    "EnableDnsHostnames": true,
+    "EnableDnsSupport": true,
+    "InstanceTenancy": "default",
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "KafkaPipelineStack/Deploy/Kafka/kafka_vpc"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "KafkaPipelineStack/Deploy/Kafka/kafka_vpc/Resource"
+   }
+  },
+  "kafkavpcPublicSNSubnet1Subnet7B9DF207": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "VpcId": {
+     "Ref": "kafkavpcF4A7E5D6"
+    },
+    "AvailabilityZone": {
+     "Fn::Select": [
+      0,
+      {
+       "Fn::GetAZs": ""
+      }
+     ]
+    },
+    "CidrBlock": "10.0.0.0/24",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "PublicSN"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "Name",
+      "Value": "KafkaPipelineStack/Deploy/Kafka/kafka_vpc/PublicSNSubnet1"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "KafkaPipelineStack/Deploy/Kafka/kafka_vpc/PublicSNSubnet1/Subnet"
+   }
+  },
+  "kafkavpcPublicSNSubnet1RouteTableB9A9591D": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "VpcId": {
+     "Ref": "kafkavpcF4A7E5D6"
+    },
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "KafkaPipelineStack/Deploy/Kafka/kafka_vpc/PublicSNSubnet1"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "KafkaPipelineStack/Deploy/Kafka/kafka_vpc/PublicSNSubnet1/RouteTable"
+   }
+  },
+  "kafkavpcPublicSNSubnet1RouteTableAssociation6C4A6809": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "kafkavpcPublicSNSubnet1RouteTableB9A9591D"
+    },
+    "SubnetId": {
+     "Ref": "kafkavpcPublicSNSubnet1Subnet7B9DF207"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "KafkaPipelineStack/Deploy/Kafka/kafka_vpc/PublicSNSubnet1/RouteTableAssociation"
+   }
+  },
+  "kafkavpcPublicSNSubnet1DefaultRoute0F5A07E0": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "kafkavpcPublicSNSubnet1RouteTableB9A9591D"
+    },
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "kafkavpcIGW4DFB5C55"
+    }
+   },
+   "DependsOn": [
+    "kafkavpcVPCGW0B5F8FCB"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "KafkaPipelineStack/Deploy/Kafka/kafka_vpc/PublicSNSubnet1/DefaultRoute"
+   }
+  },
+  "kafkavpcIGW4DFB5C55": {
+   "Type": "AWS::EC2::InternetGateway",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "KafkaPipelineStack/Deploy/Kafka/kafka_vpc"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "KafkaPipelineStack/Deploy/Kafka/kafka_vpc/IGW"
+   }
+  },
+  "kafkavpcVPCGW0B5F8FCB": {
+   "Type": "AWS::EC2::VPCGatewayAttachment",
+   "Properties": {
+    "VpcId": {
+     "Ref": "kafkavpcF4A7E5D6"
+    },
+    "InternetGatewayId": {
+     "Ref": "kafkavpcIGW4DFB5C55"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "KafkaPipelineStack/Deploy/Kafka/kafka_vpc/VPCGW"
+   }
+  },
+  "KafkaSG73EE33C7": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "KafkaPipelineStack/Deploy/Kafka/KafkaSG",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "SecurityGroupIngress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "from 0.0.0.0/0:22",
+      "FromPort": 22,
+      "IpProtocol": "tcp",
+      "ToPort": 22
+     },
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "from 0.0.0.0/0:2888-3888",
+      "FromPort": 2888,
+      "IpProtocol": "tcp",
+      "ToPort": 3888
+     },
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "from 0.0.0.0/0:9092",
+      "FromPort": 9092,
+      "IpProtocol": "tcp",
+      "ToPort": 9092
+     },
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "from 0.0.0.0/0:2181",
+      "FromPort": 2181,
+      "IpProtocol": "tcp",
+      "ToPort": 2181
+     }
+    ],
+    "VpcId": {
+     "Ref": "kafkavpcF4A7E5D6"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "KafkaPipelineStack/Deploy/Kafka/KafkaSG/Resource"
+   }
+  },
+  "KafkaInstanceRole8689BD38": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": {
+         "Fn::Join": [
+          "",
+          [
+           "ec2.",
+           {
+            "Ref": "AWS::URLSuffix"
+           }
+          ]
+         ]
+        }
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "KafkaPipelineStack/Deploy/Kafka/Kafka"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "KafkaPipelineStack/Deploy/Kafka/Kafka/InstanceRole/Resource"
+   }
+  },
+  "KafkaInstanceProfileB3242217": {
+   "Type": "AWS::IAM::InstanceProfile",
+   "Properties": {
+    "Roles": [
+     {
+      "Ref": "KafkaInstanceRole8689BD38"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "KafkaPipelineStack/Deploy/Kafka/Kafka/InstanceProfile"
+   }
+  },
+  "KafkaDE2CE4FA": {
+   "Type": "AWS::EC2::Instance",
+   "Properties": {
+    "AvailabilityZone": {
+     "Fn::Select": [
+      0,
+      {
+       "Fn::GetAZs": ""
+      }
+     ]
+    },
+    "IamInstanceProfile": {
+     "Ref": "KafkaInstanceProfileB3242217"
+    },
+    "ImageId": {
+     "Ref": "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmx8664gp2C96584B6F00A464EAD1953AFF4B05118Parameter"
+    },
+    "InstanceType": "t2.medium",
+    "KeyName": "testkp",
+    "SecurityGroupIds": [
+     {
+      "Fn::GetAtt": [
+       "KafkaSG73EE33C7",
+       "GroupId"
+      ]
+     }
+    ],
+    "SubnetId": {
+     "Ref": "kafkavpcPublicSNSubnet1Subnet7B9DF207"
+    },
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "KafkaPipelineStack/Deploy/Kafka/Kafka"
+     }
+    ],
+    "UserData": {
+     "Fn::Base64": "#!/bin/bash\nyum update -y\namazon-linux-extras install java-openjdk11 -y\nwget https://downloads.apache.org/kafka/3.2.3/kafka_2.13-3.2.3.tgz\ntar -xzf kafka_2.13-3.2.3.tgz\nkafka_2.13-3.2.3/bin/zookeeper-server-start.sh -daemon kafka_2.13-3.2.3/config/zookeeper.properties\nsleep 5s\nkafka_2.13-3.2.3/bin/kafka-server-start.sh -daemon kafka_2.13-3.2.3/config/server.properties\n\n# Add Userdata comments"
+    }
+   },
+   "DependsOn": [
+    "KafkaInstanceRole8689BD38"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "KafkaPipelineStack/Deploy/Kafka/Kafka/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/1WOzW6DQAyEnyX3ZUvTSj1HHKLcVlDlWpmNo7gBO9r1KkKIdy8EUtqTx59/Zrb2Pbf5Bu4x86dr1lBt+0rBX82Ivnr0W9sfb94UZz66wrhUN+SrVDPqxFZVSlL8hLrBla9sF6N4AiXh3+VJHFgxjJt7ULxDt9gs3U7HIJcWWU2FPgXSbh8k3R4G/8CBowL75eWsB0PQ2r6UOdGzPscuyJkaHAZTYpQU5mMHAVocMz1O/gwK4RNN8QfjOr0Iv7zZ19x+bL4jURYSK7Voy7n+AO/c+RBVAQAA"
+   },
+   "Metadata": {
+    "aws:cdk:path": "KafkaPipelineStack/Deploy/Kafka/CDKMetadata/Default"
+   },
+   "Condition": "CDKMetadataAvailable"
+  }
+ },
+ "Parameters": {
+  "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmx8664gp2C96584B6F00A464EAD1953AFF4B05118Parameter": {
+   "Type": "AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>",
+   "Default": "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2"
+  },
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Conditions": {
+  "CDKMetadataAvailable": {
+   "Fn::Or": [
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "af-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-northwest-1"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "sa-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-2"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-2"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

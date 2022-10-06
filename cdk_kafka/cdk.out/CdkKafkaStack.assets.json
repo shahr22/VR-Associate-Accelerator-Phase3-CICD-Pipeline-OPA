@@ -1,0 +1,19 @@
+{
+  "version": "21.0.0",
+  "files": {
+    "e0928a82cc5d0ccb81f4add7fb4525f9aa2c0be6b6d9bbe69b48a38b2cea9342": {
+      "source": {
+        "path": "CdkKafkaStack.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "current_account-current_region": {
+          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
+          "objectKey": "e0928a82cc5d0ccb81f4add7fb4525f9aa2c0be6b6d9bbe69b48a38b2cea9342.json",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}

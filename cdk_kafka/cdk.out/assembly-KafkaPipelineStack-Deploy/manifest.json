@@ -1,0 +1,137 @@
+{
+  "version": "21.0.0",
+  "artifacts": {
+    "KafkaPipelineStackDeployKafka083912F1.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "KafkaPipelineStackDeployKafka083912F1.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "KafkaPipelineStackDeployKafka083912F1": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "KafkaPipelineStackDeployKafka083912F1.template.json",
+        "validateOnSynth": true,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/a5bf990ea146f02356d6892801e904c9506f006c2eb7077056e2323962cd7eee.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "KafkaPipelineStackDeployKafka083912F1.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        },
+        "stackName": "Deploy-Kafka"
+      },
+      "dependencies": [
+        "KafkaPipelineStackDeployKafka083912F1.assets"
+      ],
+      "metadata": {
+        "/KafkaPipelineStack/Deploy/Kafka/kafka_vpc/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "kafkavpcF4A7E5D6"
+          }
+        ],
+        "/KafkaPipelineStack/Deploy/Kafka/kafka_vpc/PublicSNSubnet1/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "kafkavpcPublicSNSubnet1Subnet7B9DF207"
+          }
+        ],
+        "/KafkaPipelineStack/Deploy/Kafka/kafka_vpc/PublicSNSubnet1/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "kafkavpcPublicSNSubnet1RouteTableB9A9591D"
+          }
+        ],
+        "/KafkaPipelineStack/Deploy/Kafka/kafka_vpc/PublicSNSubnet1/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "kafkavpcPublicSNSubnet1RouteTableAssociation6C4A6809"
+          }
+        ],
+        "/KafkaPipelineStack/Deploy/Kafka/kafka_vpc/PublicSNSubnet1/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "kafkavpcPublicSNSubnet1DefaultRoute0F5A07E0"
+          }
+        ],
+        "/KafkaPipelineStack/Deploy/Kafka/kafka_vpc/IGW": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "kafkavpcIGW4DFB5C55"
+          }
+        ],
+        "/KafkaPipelineStack/Deploy/Kafka/kafka_vpc/VPCGW": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "kafkavpcVPCGW0B5F8FCB"
+          }
+        ],
+        "/KafkaPipelineStack/Deploy/Kafka/KafkaSG/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "KafkaSG73EE33C7"
+          }
+        ],
+        "/KafkaPipelineStack/Deploy/Kafka/Kafka/InstanceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "KafkaInstanceRole8689BD38"
+          }
+        ],
+        "/KafkaPipelineStack/Deploy/Kafka/Kafka/InstanceProfile": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "KafkaInstanceProfileB3242217"
+          }
+        ],
+        "/KafkaPipelineStack/Deploy/Kafka/Kafka/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "KafkaDE2CE4FA"
+          }
+        ],
+        "/KafkaPipelineStack/Deploy/Kafka/SsmParameterValue:--aws--service--ami-amazon-linux-latest--amzn2-ami-hvm-x86_64-gp2:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmx8664gp2C96584B6F00A464EAD1953AFF4B05118Parameter"
+          }
+        ],
+        "/KafkaPipelineStack/Deploy/Kafka/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/KafkaPipelineStack/Deploy/Kafka/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/KafkaPipelineStack/Deploy/Kafka/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/KafkaPipelineStack/Deploy/Kafka/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "KafkaPipelineStack/Deploy/Kafka"
+    }
+  }
+}
