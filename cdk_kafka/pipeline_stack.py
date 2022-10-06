@@ -27,11 +27,12 @@ class KafkaPipelineStack(Stack):
                 commands=[
                     "npm install -g aws-cdk",  # Installs the cdk cli on Codebuild
                     "pip install -r requirements.txt",  # Instructs Codebuild to install required packages
-                    "cdk synth",
+                    "cdk synth '**'",
                     "curl -L -o opa https://openpolicyagent.org/downloads/v0.44.0/opa_linux_amd64_static",
                     "chmod 755 ./opa",
                     "mkdir opa_input",
                     "for template in $(find ./cdk.out -type f -maxdepth 2 -name '*.template.json'); do cp $template ./opa_input; done",
+                    "rm opa/input/KafkaPipelineStack.template.json",
                     "set -e",
                     'for template in opa_input/*; do ./opa eval --fail-defined -i $template -d cdk_kafka/policy.rego "data.rules.fail[x]"; done',
                 ],
